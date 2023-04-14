@@ -1,0 +1,34 @@
+@use 'base/variables' as v;
+
+/** Media Queries **/
+@mixin telefono {
+    @media (min-width: v.$telefono) {
+        @content;
+    }
+}
+@mixin tablet {
+    @media (min-width: v.$tablet) {
+        @content;
+    }
+}
+@mixin desktop {
+    @media (min-width: v.$desktop) {
+        @content;
+    }
+}
+
+// @content es una regla de SASS que se utiliza para reutilizar un bloque de código al reducir la repetición 
+// del mismo código. Se usa como cuerpo en @mixin para incluir un bloque de código que se pasa a través de @include.
+//Manzanas: Representa todo lo que vayas a escribir dentro de ese mixin.
+
+@mixin textoDegradado($color){
+    background: linear-gradient(to right, $color 0%, lighten($color, 20%) 100%);
+    color: transparent;
+    -webkit-background-clip: text; /* PARA QUE FUNCIONE EN CHROME EL EFECTO */
+    background-clip:text ;
+    text-align: center;
+
+    @include tablet{
+        font-size: 10rem;
+    }
+}
