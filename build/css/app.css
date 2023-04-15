@@ -11,6 +11,7 @@ html {
 
 body {
   font-size: 1.6rem;
+  font-family: "Tajawal", sans-serif;
 }
 
 /** Media Queries **/
@@ -321,4 +322,87 @@ template {
  */
 [hidden] {
   display: none;
+}
+
+.contenido {
+  border-radius: 1rem;
+  margin: 1px auto;
+  width: 80%;
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  padding: 5rem;
+}
+
+.contenido__formulario .label {
+  color: #000;
+  font-weight: bold;
+  font-size: 3rem;
+}
+.contenido__formulario .tipotexto {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.contenido__formulario .tipotexto:focus {
+  outline: solid black 1.1px;
+}
+
+.boton {
+  display: flex;
+  justify-content: flex-end;
+}
+.boton__submit {
+  margin-top: 1.1rem;
+  display: flex;
+  justify-content: flex-end;
+  background-color: #c2fbd7;
+  border-radius: 10px;
+  box-shadow: rgba(44, 187, 99, 0.2) 0 -25px 18px -14px inset, rgba(44, 187, 99, 0.15) 0 1px 2px, rgba(44, 187, 99, 0.15) 0 2px 4px, rgba(44, 187, 99, 0.15) 0 4px 8px, rgba(44, 187, 99, 0.15) 0 8px 16px, rgba(44, 187, 99, 0.15) 0 16px 32px;
+  color: green;
+  cursor: pointer;
+  font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+.boton__submit:hover {
+  box-shadow: rgba(44, 187, 99, 0.35) 0 -25px 18px -14px inset, rgba(44, 187, 99, 0.25) 0 1px 2px, rgba(44, 187, 99, 0.25) 0 2px 4px, rgba(44, 187, 99, 0.25) 0 4px 8px, rgba(44, 187, 99, 0.25) 0 8px 16px, rgba(44, 187, 99, 0.25) 0 16px 32px;
+  transform: scale(1.05) rotate(-1deg);
+}
+
+.titulo {
+  background-image: url(/img/casa.jpg);
+  background-size: cover;
+  background-position: center;
+  height: 40.1rem;
+}
+.titulo__texto {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(90deg, rgba(2, 0, 36, 0.8576680672) 0%, rgba(0, 0, 0, 0.348) 100%);
+  width: 100%;
+  height: 100%;
+  /* PARA LA SOMBRA */
+}
+.titulo__texto h2 {
+  font-family: "Bayon", sans-serif;
+  font-size: 5rem;
+  margin: 0 0 0 1rem;
+  color: #FFFFFF;
+}
+.titulo__texto p {
+  color: #FFFFFF;
+  font-family: "Tajawal", sans-serif;
+  font-size: 10rem;
+  text-align: center;
+}
+
+.pie {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,0 +1,32 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.titulo {
+    background-image: url(/img/casa.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 40.1rem;
+
+    &__texto {
+        background: rgb(2, 0, 36);
+        background: linear-gradient(90deg, rgba(2, 0, 36, 0.8576680672268908) 0%, rgba(0, 0, 0, 0.348) 100%);
+        width: 100%;
+        height: 100%;
+        /* PARA LA SOMBRA */
+
+        h2 {
+            font-family: v.$fuente_titulos;
+            font-size: 5rem;
+            margin: 0 0 0 1rem;
+            color: v.$blanco;
+        }
+
+        p {
+            color: v.$blanco;
+            font-family: v.$fuente_principal;
+            font-size: 10rem;
+            text-align: center;
+        }
+    }
+
+}
