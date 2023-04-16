@@ -36,6 +36,9 @@
             font-size: 4rem;
             margin: 0;
         }
+        &__utiliza{
+            margin: 0 0 8rem 0;
+        }
     }
 
 }
@@ -43,10 +46,33 @@
 .formularioInput {
     .inputLogin {
         width: 100%;
-        margin-bottom: 2rem;
+        margin-bottom: 2.8rem;
         padding: 2rem;
         border-radius: 1rem;
         border: none;
         outline: none;
     }
 }
+
+/* PARA EL EFECTO DEL PLACE HOLDER */
+.contenedorInput {
+    position: relative;
+}
+
+.placeholderLogin {
+    color: rgba(v.$negro, .5);
+    position: absolute;
+    top: 22px;
+    left: 8px;
+    padding: 0px 5px;
+    transition: 0.3s;
+    pointer-events: none;
+}
+
+.inputLogin:focus 
+    +.placeholderLogin,
+    .inputLogin:not(:placeholder-shown)+.placeholderLogin {
+        top: -20px;
+        color: white;
+}
+/*ACABA___PARA EL EFECTO DEL PLACE HOLDER */
