@@ -406,3 +406,66 @@ template {
   justify-content: center;
   align-items: center;
 }
+
+.imagenLogin {
+  background-image: url(/img/login.jpg);
+  background-size: cover;
+  height: 103vh;
+}
+
+.sombra {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+}
+
+.headerLogin {
+  font-family: "Bayon", sans-serif;
+  font-size: 4rem;
+  color: #FFFFFF;
+}
+.headerLogin h2 {
+  margin: 0 0 0 1rem;
+}
+
+.formularioLogin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+}
+.formularioLogin__fieldset {
+  border-radius: 1rem;
+  border: solid rgba(255, 255, 255, 0.5);
+  height: 60rem;
+  width: 50rem;
+  background-color: rgba(0, 0, 0, 0.568);
+  padding: 4rem;
+}
+.formularioLogin .centrarImagen {
+  display: grid;
+  place-items: center;
+}
+.formularioLogin .imagenLogoSB {
+  width: 100px;
+  height: 100px;
+}
+.formularioLogin .textoLogin {
+  color: #FFFFFF;
+  font-size: 2rem;
+  font-family: "Tajawal", sans-serif;
+  text-align: center;
+}
+.formularioLogin .textoLogin__iniciar {
+  font-size: 4rem;
+  margin: 0;
+}
+
+.formularioInput .inputLogin {
+  width: 100%;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: none;
+  outline: none;
+}

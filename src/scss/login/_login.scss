@@ -1,0 +1,52 @@
+@use 'base/variables' as v;
+
+.formularioLogin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+
+
+    &__fieldset {
+        border-radius: 1rem;
+        border: solid rgba(v.$blanco, .5);
+        height: 60rem;
+        width: 50rem;
+        background-color: rgba(0, 0, 0, 0.568);
+        padding: 4rem;
+    }
+
+    .centrarImagen {
+        display: grid;
+        place-items: center;
+    }
+
+    .imagenLogoSB {
+        width: 100px;
+        height: 100px;
+    }
+
+    .textoLogin {
+        color: v.$blanco;
+        font-size: 2rem;
+        font-family: v.$fuente_principal;
+        text-align: center;
+
+        &__iniciar {
+            font-size: 4rem;
+            margin: 0;
+        }
+    }
+
+}
+
+.formularioInput {
+    .inputLogin {
+        width: 100%;
+        margin-bottom: 2rem;
+        padding: 2rem;
+        border-radius: 1rem;
+        border: none;
+        outline: none;
+    }
+}
