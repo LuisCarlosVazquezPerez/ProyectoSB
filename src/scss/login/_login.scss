@@ -69,10 +69,12 @@
     pointer-events: none;
 }
 
-.inputLogin:focus 
-    +.placeholderLogin,
-    .inputLogin:not(:placeholder-shown)+.placeholderLogin {
-        top: -20px;
-        color: white;
-}
+.inputLogin {
+    &:focus + .placeholderLogin,
+    &:not(:placeholder-shown) + .placeholderLogin {
+      top: -20px;
+      color: white;
+    }
+  }
+  
 /*ACABA___PARA EL EFECTO DEL PLACE HOLDER */
