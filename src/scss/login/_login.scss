@@ -10,10 +10,15 @@
     &__fieldset {
         border-radius: 1rem;
         border: solid rgba(v.$blanco, .5);
-        height: 60rem;
+        height: auto;
         width: 50rem;
         background-color: rgba(0, 0, 0, 0.568);
         padding: 4rem;
+
+        &--registro{
+            width: 80rem;
+        }
+
     }
 
     .centrarImagen {
