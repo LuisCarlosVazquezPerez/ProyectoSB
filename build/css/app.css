@@ -514,3 +514,15 @@ template {
 .contenedorGrid :nth-child(6) {
   grid-column: 2/3;
 }
+
+.alerta {
+  color: white;
+  padding: 0.5rem;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 1rem 0;
+}
+.alerta.error {
+  background-color: rgb(182, 0, 0);
+}
