@@ -6,6 +6,14 @@ $db = conectarDB();
 //ARREGLO CON MENSAJES DE ERRORES
 $errores = [];
 
+//VARIABLES SE CREAN VACIAS
+$titulo = '';
+$descripcion = '';
+$precio = '';
+$coloniaCasa = '';
+$calleCasa = '';
+$numCasa = '';
+
 //EJECUTA EL CODIGO DEDSPUES DE QUE EL USUARIO ENVIA EL FORMULARIO
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
 
@@ -13,12 +21,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
     // var_dump($_POST);
     // echo "</pre>";
 
-    $titulo = $_POST['titulo'];
-    $descripcion = $_POST['descripcion'];
-    $precio = $_POST['precio'];
-    $coloniaCasa = $_POST['coloniaCasa'];
-    $calleCasa = $_POST['calleCasa'];
-    $numCasa = $_POST['numCasa'];
+    // echo "<pre>";
+    // var_dump($_FILES);
+    // echo "</pre>";
+
+    //exit; //PARA QUE NO SE EJECUTE EL CODIGO DE ABAJO
+
+    //SE LES ASIGNA EL VALOR
+    $titulo = mysqli_real_escape_string($db, $_POST['titulo']);  //[name='titulo'];
+    $descripcion = mysqli_real_escape_string($db, $_POST['descripcion']);   //mysqli_real_escape_string es para evitar inyeccion sql.
+    $precio = mysqli_real_escape_string($db, $_POST['precio']);
+    $coloniaCasa = mysqli_real_escape_string($db, $_POST['coloniaCasa']);
+    $calleCasa = mysqli_real_escape_string($db, $_POST['calleCasa']);
+    $numCasa = mysqli_real_escape_string($db, $_POST['numCasa']);
+    $creado = date('Y/m/d'); //INGRESA LA FECHA AUTOMATICAMENTE
+    $estadoPropiedad = 'Publicada'; //AGREGA POR DEFAULT EN LA COLUMA ESTADO 'PUBLICADA'
+    $imagen = $_FILES['imagen']; //ASIGNAR LA IMAGEN A UNA VARIABLE
+
 
     if (!$titulo) {
         $errores[] = 'Debes agregar un titulo';
@@ -38,20 +57,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
     if (!$numCasa) {
         $errores[] = 'Debes agregar el numero de casa';
     }
+    if (!$imagen['name'] || $imagen['error']) { //Si la imagen no existe o no la agregan || si la imagen se pasa de los 2 mb
+        $errores[] = 'Debes agregar una imagen'; //PHP tiene limitado de 2 mb
+        //Si se pasa de dos megas te retorna un error
+    }
+    //VALIDAR POR SIZE DE LA IMAGEN (1 mb maximo)
+    $medida = 1000 * 1000; //LOS DATOS LOS MIDE EN BYTES, 1000000 bytes = 1mb
+    if ($imagen['size'] > $medida) {
+        $errores[] = 'La imagen es muy pesada';
+    }
+
+
 
     //REVISAR QUE EL ARRAY DE ERRORES ESTE VACIO
     //ISSET REVISA QUE LA VARIABLE ESTE CREADA /  EMPTY REVISA QUE UN ARREGLO ESTE VACIO
     if (empty($errores)) {
+        //SUBIDA DE ARCHIVOS (IMAGEN)
+
+        //CREAR CARPETAS
+        $carpetaImagenes = 'imagenes';
+        if (!is_dir($carpetaImagenes)) { //is_dir RETORNA SI UNA CARPETA EXISTE
+            mkdir($carpetaImagenes); //mkdir PARA CREAR UN DIRECTORIO
+        }
+
+        //GENERAR NOMBRE UNICO PARA LAS IMAGENES
+        $nombreImagen = md5(uniqid(rand(), true)) . '.jpg'; //md5(uniqid(rand())) GENERAN NUMEROS ALEATORIOS PERO NO TIENE NADA QUE VER CON SEGURIDAD (EL ALG FUE HACKEADO)
+
+        //SUBIR LA IMAGEN 
+        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . "/" . $nombreImagen);  //PARA MOVER LA IMAGEN EN MEMORIA, AL SERVIDOR, HACIA LA CARPETA IMAGENES
+
 
         //INSERTAR EN LA BASE DE DATOS
-        $query = " INSERT INTO propiedad (titulo, descripcion, precio, coloniaCasa, calleCasa, numCasa)
-    VALUES ( '$titulo', '$descripcion', '$precio', '$coloniaCasa', '$calleCasa', '$numCasa') ";
+        $query = " INSERT INTO propiedad (titulo, descripcion, precio, imagen , coloniaCasa, calleCasa, numCasa, fechaPub, estadoPropiedad)
+    VALUES ('$titulo', '$descripcion', '$precio','$nombreImagen', '$coloniaCasa', '$calleCasa', '$numCasa', '$creado', '$estadoPropiedad') ";
 
         //echo $query;  //PARA VER QUE EL QUERY ESTE ESCRITO CORRECTAMENTE
 
         $resultado = mysqli_query($db, $query);
         if ($resultado) {
-            echo "Insertado Correctamente";
+            //REDIRECCIONAR AL USUARIO.
+            header('Location: /adminP.php');
         }
     }
 }
@@ -83,61 +128,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
     <main>
         <div class="contenido">
 
-
-
             <!-- PARA MOSTRAR LA ALERTA DE LOS ERRORES -->
-        <?php foreach ($errores as $error) : ?> <!--FOREACH PARA EJECUTAR AL MENOS 1 VEZ POR CADA VEZ QUE HAY UN ELEMENTO EN EL ARREGLO -->
-           
-            <div class="alerta error">
-                <?php echo $error; ?>
-            </div>
-            
-        <?php endforeach; ?>
+            <?php foreach ($errores as $error) : ?> <!--FOREACH PARA EJECUTAR AL MENOS 1 VEZ POR CADA VEZ QUE HAY UN ELEMENTO EN EL ARREGLO -->
+
+                <div class="alerta error">
+                    <?php echo $error; ?>
+                </div>
+
+            <?php endforeach; ?>
 
 
+            <form action="propiedad.php" class="contenido__formulario" enctype="multipart/form-data" method="POST"> <!--enctype para subir imagenes-->
 
-        <form action="propiedad.php" class="contenido__formulario" enctype="multipart/form-data" method="POST"> <!--enctype para subir imagenes-->
+                <div>
+                    <label class="label" for="titulo">Titulo</label>
+                    <input class="tipotexto" type="text" name="titulo" id="titulo" placeholder="Ingrese Titulo Llamativo" value="<?php echo $titulo ?>">
+                    <!-- EN VALUE SE AGREGA EL PHP PARA QUE NO SE BORRE LO QUE SE AGREGO AL MOMENTO DE FALTAR DATOS -->
+                </div>
 
-            <div>
-                <label class="label" for="titulo">Titulo</label>
-                <input class="tipotexto" type="text" name="titulo" id="titulo" placeholder="Ingrese Titulo Llamativo">
-            </div>
+                <div>
+                    <label class="label" for="descripcion">Descripcion</label>
+                    <input class="tipotexto" type="text" name="descripcion" id="descripcion" placeholder="Ingrese Descripcion" value="<?php echo $descripcion ?>">
+                </div>
 
-            <div>
-                <label class="label" for="descripcion">Descripcion</label>
-                <input class="tipotexto" type="text" name="descripcion" id="descripcion" placeholder="Ingrese Descripcion">
-            </div>
+                <div>
+                    <label class="label" for="precio">Precio</label>
+                    <input class="tipotexto" type="number" name="precio" id="precio" min="0" placeholder="Ingrese precio de la propiedad" value="<?php echo $precio ?>">
+                </div>
 
-            <div>
-                <label class="label" for="precio">Precio</label>
-                <input class="tipotexto" type="number" name="precio" id="precio" min="0" placeholder="Ingrese precio de la propiedad">
-            </div>
+                <div>
+                    <label class="label" for="imagen">Imagen</label>
+                    <input class="tipotexto" type="file" id="imagen" accept="image/jpeg, image/png" name="imagen">
+                </div>
 
-            <div>
-                <label class="label" for="imagen">Imagen</label>
-                <input class="tipotexto" type="file" name="imagen" id="imagen">
-            </div>
+                <div>
+                    <label class="label" for="coloniaCasa">Casa Colonia</label>
+                    <input class="tipotexto" type="text" name="coloniaCasa" id="coloniaCasa" min="0" placeholder="Ingrese la colonia de la casa" value="<?php echo $coloniaCasa ?>">
+                </div>
 
-            <div>
-                <label class="label" for="coloniaCasa">Casa Colonia</label>
-                <input class="tipotexto" type="text" name="coloniaCasa" id="coloniaCasa" min="0" placeholder="Ingrese la colonia de la casa">
-            </div>
+                <div>
+                    <label class="label" for="calleCasa">Calle</label>
+                    <input class="tipotexto" type="text" name="calleCasa" id="calleCasa" min="0" placeholder="Ingrese la calle de la propiedad" value="<?php echo $calleCasa ?>">
+                </div>
 
-            <div>
-                <label class="label" for="calleCasa">Calle</label>
-                <input class="tipotexto" type="text" name="calleCasa" id="calleCasa" min="0" placeholder="Ingrese la calle de la propiedad">
-            </div>
+                <div>
+                    <label class="label" for="numCasa">Numero Casa</label>
+                    <input class="tipotexto" type="text" name="numCasa" id="numCasa" min="0" placeholder="Ingrese el numero de la casa" value="<?php echo $numCasa ?>">
+                </div>
 
-            <div>
-                <label class="label" for="numCasa">Numero Casa</label>
-                <input class="tipotexto" type="text" name="numCasa" id="numCasa" min="0" placeholder="Ingrese el numero de la casa">
-            </div>
+                <div class="boton">
+                    <input class="boton__submit" type="submit" value="Enviar">
+                </div>
 
-            <div class="boton">
-                <input class="boton__submit" type="submit" value="Enviar">
-            </div>
-
-        </form> <!--Acaba la etiqueta form-->
+            </form> <!--Acaba la etiqueta form-->
         </div> <!--Acaba div que contiene formulario-->
     </main>
 
