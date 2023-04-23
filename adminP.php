@@ -22,7 +22,7 @@
 
     <main>
         <div class="contenido">
-                <button class="boton-adminP">Nueva Propiedad</button>
+         <a href="/propiedad.php"><button class="boton-adminP">Nueva Propiedad</button></a>       
         
             
         </div>

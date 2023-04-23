@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
             <?php endforeach; ?>
 
 
-            <form action="propiedad.php" class="contenido__formulario" enctype="multipart/form-data" method="POST"> <!--enctype para subir imagenes-->
+            <form action="propiedad.php" class="contenido__formulario" enctype="multipart/form-data" method="POST" id="formPropiedad"> <!--enctype para subir imagenes-->
 
                 <div>
                     <label class="label" for="titulo">Titulo</label>
@@ -188,6 +188,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
         <p>Todos Los Derechos Reservados por SoftBrothers</p>
     </footer>
 
+    <script defer src="/script.js"></script>
+    <script defer src="/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
 </body>
 
 </html>
