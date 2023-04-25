@@ -530,9 +530,8 @@ template {
 .alerta.error {
   background-color: rgb(182, 0, 0);
 }
-
-.boton-adminP {
-  width: 80%;
+.alerta.exito {
+  background-color: rgb(30, 182, 0);
 }
 
 .boton-adminP {
@@ -578,4 +577,93 @@ template {
   background-color: #c85000;
   box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
   transform: translateY(0);
+}
+
+table.propiedades {
+  margin-top: 4rem;
+  width: 100%;
+  border-spacing: 0;
+}
+table.propiedades thead {
+  background-color: rgb(0, 120, 0);
+}
+table.propiedades thead th {
+  color: #FFFFFF;
+  padding: 2rem;
+}
+table.propiedades .imagen-tabla {
+  width: 10rem;
+}
+
+.boton-rojo {
+  background-color: initial;
+  background-image: linear-gradient(-180deg, #ff2200, #e60303);
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Inter, -apple-system, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  height: 40px;
+  line-height: 40px;
+  outline: 0;
+  overflow: hidden;
+  padding: 0 20px;
+  pointer-events: auto;
+  position: relative;
+  text-align: center;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 100%;
+  z-index: 9;
+  border: 0;
+  transition: box-shadow 0.2s;
+  margin-bottom: 0.5rem;
+  text-decoration: none;
+}
+
+.boton-verde {
+  text-decoration: none;
+  background-color: initial;
+  background-image: linear-gradient(-180deg, #00ff11, #03e603);
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Inter, -apple-system, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  height: 40px;
+  line-height: 40px;
+  outline: 0;
+  overflow: hidden;
+  padding: 0 20px;
+  pointer-events: auto;
+  position: relative;
+  text-align: center;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 100%;
+  z-index: 9;
+  border: 0;
+  transition: box-shadow 0.2s;
+  margin-bottom: 2rem;
+}
+
+.tr-centrar {
+  text-align: center;
+}
+
+.imagen-small {
+  width: 15rem;
+}
+
+input[type=file] {
+  position: relative;
+  left: -1rem;
 }
