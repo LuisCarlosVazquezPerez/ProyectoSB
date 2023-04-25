@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <th>ID</th>
                         <th>Titulo</th>
                         <th>Imagen</th>
-                        <th>Precio</th>
+                        <th>Precio</th> 
                         <th>Acciones</th>
                     </tr>
                 </thead>
