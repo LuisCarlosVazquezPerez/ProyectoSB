@@ -1,24 +1,25 @@
-const form = document.querySelector('#eliminar-propiedad-form');
-const submitButton = form.querySelector('input[type="button"]');
 
-  submitButton.addEventListener('click', (event) => {
-    // Evita que el formulario se envíe inmediatamente
-    event.preventDefault();
 
-    // Mostrar la alerta de confirmación
+
+
+
+
+
+
+
+function confirmarEliminacion(event) {
+    event.preventDefault(); // previene el envío del formulario por defecto
     Swal.fire({
-      title: '¿Estás seguro?',
-      text: 'Esta acción eliminará permanentemente la propiedad',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar'
+        title: '¿Estás seguro de querer eliminar esta propiedad?',
+        text: 'Esta acción no se puede deshacer.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
     }).then((result) => {
-      if (result.isConfirmed) {
-        // Si el usuario hace clic en el botón "Sí, eliminar", envía el formulario
-        form.submit();
-      }
+        if (result.isConfirmed) {
+        console.log("llego");
+            event.target.submit(); // envía el formulario si se confirma la eliminación     
+        }
     });
-  });
+}
