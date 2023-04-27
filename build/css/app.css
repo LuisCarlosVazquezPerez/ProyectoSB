@@ -534,6 +534,10 @@ template {
   background-color: rgb(30, 182, 0);
 }
 
+.volver-boton {
+  margin-bottom: 3rem;
+}
+
 .boton-adminP {
   align-items: center;
   background-clip: padding-box;
@@ -624,6 +628,35 @@ table.propiedades .imagen-tabla {
   margin-bottom: 0.5rem;
   text-decoration: none;
 }
+.boton-rojo--estado {
+  text-decoration: none;
+  background-color: initial;
+  background-image: linear-gradient(-180deg, #f2ea00, #737373);
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Inter, -apple-system, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  height: 40px;
+  line-height: 40px;
+  outline: 0;
+  overflow: hidden;
+  padding: 0 20px;
+  pointer-events: auto;
+  position: relative;
+  text-align: center;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 60%;
+  z-index: 9;
+  border: 0;
+  transition: box-shadow 0.2s;
+  margin-bottom: 2rem;
+}
 
 .boton-verde {
   text-decoration: none;
@@ -649,6 +682,35 @@ table.propiedades .imagen-tabla {
   vertical-align: top;
   white-space: nowrap;
   width: 100%;
+  z-index: 9;
+  border: 0;
+  transition: box-shadow 0.2s;
+  margin-bottom: 2rem;
+}
+.boton-verde--estado {
+  text-decoration: none;
+  background-color: initial;
+  background-image: linear-gradient(-180deg, #004654, #03e6e6);
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Inter, -apple-system, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  height: 40px;
+  line-height: 40px;
+  outline: 0;
+  overflow: hidden;
+  padding: 0 20px;
+  pointer-events: auto;
+  position: relative;
+  text-align: center;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 60%;
   z-index: 9;
   border: 0;
   transition: box-shadow 0.2s;

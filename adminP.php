@@ -107,7 +107,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <a href="/actualizarP.php?id=<?php echo $propiedad['id'] ?>" class="boton-verde">Actualizar</a>
                             </td>
                             <td>
-                                <button id="btnEstado"> <?php echo $propiedad['estadoPropiedad'] ?> </button>
+                                <?php if ($propiedad['estadoPropiedad'] == 1) : ?>
+                                    <a id="boton-vendida" class="boton-verde--estado" href="status.php?id=<?php echo $propiedad['id']; ?>&estadoPropiedad=0" onclick="cambiarEstado(event)">
+                                        Publicada
+                                    </a>
+                                <?php else : ?>
+                                    <a class="boton-rojo--estado" href="status.php?id=<?php echo $propiedad['id']; ?>&estadoPropiedad=1" onclick="cambiarEstado(event)">
+                                        Vendida
+                                    </a>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endwhile; ?>

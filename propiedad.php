@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
     $calleCasa = mysqli_real_escape_string($db, $_POST['calleCasa']);
     $numCasa = mysqli_real_escape_string($db, $_POST['numCasa']);
     $creado = date('Y/m/d'); //INGRESA LA FECHA AUTOMATICAMENTE
-    $estadoPropiedad = 'Publicada'; //AGREGA POR DEFAULT EN LA COLUMA ESTADO 'PUBLICADA'
+    $estadoPropiedad = 1 ; //AGREGA POR DEFAULT EN LA COLUMA ESTADO 'PUBLICADA'
     $imagen = $_FILES['imagen']; //ASIGNAR LA IMAGEN A UNA VARIABLE
 
     if (!$titulo) {
@@ -125,8 +125,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
 
 
     <main>
+    
         <div class="contenido">
-
+            <div class="volver-boton">
+                <a href="/AdminP.php"><button class="boton-adminP">Volver</button></a>
+            </div>
             <!-- PARA MOSTRAR LA ALERTA DE LOS ERRORES -->
             <?php foreach ($errores as $error) : ?> <!--FOREACH PARA EJECUTAR AL MENOS 1 VEZ POR CADA VEZ QUE HAY UN ELEMENTO EN EL ARREGLO -->
 
@@ -141,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
 
                 <div>
                     <label class="label" for="titulo">Titulo</label>
-                    <input class="tipotexto" type="text" name="titulo" id="titulo" placeholder="Ingrese Titulo Llamativo" value="<?php echo $titulo ?>">
+                    <input maxlength="20" class="tipotexto" type="text" name="titulo" id="titulo" placeholder="Ingrese Titulo Llamativo" value="<?php echo $titulo ?>">
                     <!-- EN VALUE SE AGREGA EL PHP PARA QUE NO SE BORRE LO QUE SE AGREGO AL MOMENTO DE FALTAR DATOS -->
                 </div>
 
@@ -152,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
 
                 <div>
                     <label class="label" for="precio">Precio</label>
-                    <input class="tipotexto" type="number" name="precio" id="precio" min="0" placeholder="Ingrese precio de la propiedad" value="<?php echo $precio ?>">
+                    <input min="1" max="99999999" class="tipotexto" type="number" name="precio" id="precio" min="0" placeholder="Ingrese precio de la propiedad" value="<?php echo $precio ?>">
                 </div>
 
                 <div>

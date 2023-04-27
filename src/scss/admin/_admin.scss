@@ -65,40 +65,99 @@ table.propiedades {
   }
 }
 
-  .boton-rojo {
-    background-color: initial;
-    background-image: linear-gradient(-180deg, #ff2200, #e60303);
-    border-radius: 6px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
-    color: #FFFFFF;
-    cursor: pointer;
-    display: inline-block;
-    font-family: Inter, -apple-system, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
-    height: 40px;
-    line-height: 40px;
-    outline: 0;
-    overflow: hidden;
-    padding: 0 20px;
-    pointer-events: auto;
-    position: relative;
-    text-align: center;
-    touch-action: manipulation;
-    user-select: none;
-    -webkit-user-select: none;
-    vertical-align: top;
-    white-space: nowrap;
-    width: 100%;
-    z-index: 9;
-    border: 0;
-    transition: box-shadow .2s;
-    margin-bottom: .5rem;
-    text-decoration: none;
-  }
+.boton-rojo {
+  background-color: initial;
+  background-image: linear-gradient(-180deg, #ff2200, #e60303);
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Inter, -apple-system, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  height: 40px;
+  line-height: 40px;
+  outline: 0;
+  overflow: hidden;
+  padding: 0 20px;
+  pointer-events: auto;
+  position: relative;
+  text-align: center;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 100%;
+  z-index: 9;
+  border: 0;
+  transition: box-shadow .2s;
+  margin-bottom: .5rem;
+  text-decoration: none;
 
-  .boton-verde {
+    &--estado{
+      text-decoration: none;
+      background-color: initial;
+      background-image: linear-gradient(-180deg, #f2ea00, #737373);
+      border-radius: 6px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+      color: #FFFFFF;
+      cursor: pointer;
+      display: inline-block;
+      font-family: Inter, -apple-system, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+      height: 40px;
+      line-height: 40px;
+      outline: 0;
+      overflow: hidden;
+      padding: 0 20px;
+      pointer-events: auto;
+      position: relative;
+      text-align: center;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-user-select: none;
+      vertical-align: top;
+      white-space: nowrap;
+      width: 60%;
+      z-index: 9;
+      border: 0;
+      transition: box-shadow .2s;
+      margin-bottom: 2rem;
+    }
+}
+
+.boton-verde {
+  text-decoration: none;
+  background-color: initial;
+  background-image: linear-gradient(-180deg, #00ff11, #03e603);
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Inter, -apple-system, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  height: 40px;
+  line-height: 40px;
+  outline: 0;
+  overflow: hidden;
+  padding: 0 20px;
+  pointer-events: auto;
+  position: relative;
+  text-align: center;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 100%;
+  z-index: 9;
+  border: 0;
+  transition: box-shadow .2s;
+  margin-bottom: 2rem;
+
+  &--estado {
     text-decoration: none;
     background-color: initial;
-    background-image: linear-gradient(-180deg, #00ff11, #03e603);
+    background-image: linear-gradient(-180deg, #004654, #03e6e6);
     border-radius: 6px;
     box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
     color: #FFFFFF;
@@ -118,27 +177,28 @@ table.propiedades {
     -webkit-user-select: none;
     vertical-align: top;
     white-space: nowrap;
-    width: 100%;
+    width: 60%;
     z-index: 9;
     border: 0;
     transition: box-shadow .2s;
     margin-bottom: 2rem;
   }
-
-
-.tr-centrar{
-text-align: center;
 }
 
-.imagen-small{
+
+.tr-centrar {
+  text-align: center;
+}
+
+.imagen-small {
   width: 15rem;
 }
 
-input[type='file']{
-position: relative;
-left: -1rem;
+input[type='file'] {
+  position: relative;
+  left: -1rem;
 }
 
-.margin-0{
+.margin-0 {
   margin: 0;
 }
