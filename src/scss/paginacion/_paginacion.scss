@@ -1,0 +1,31 @@
+.paginacion{
+    margin-top: 3rem;
+    text-align: center;
+    font-size: larger;
+    a{
+        text-decoration: none;
+        color: black;
+        font-size: larger;
+        margin: 0 1rem 0 1rem ;
+
+        &:hover{
+            color: red;
+            transition: .2s ease-in-out;
+        }
+    }
+
+    .pagina-actual{
+        color: red;
+        font-size: 3rem;
+        font-weight: bolder;
+    }
+
+
+
+    .anterior-siguiente{
+        color: blue;
+        margin: 0 1rem 0 1rem;
+    }
+
+
+}

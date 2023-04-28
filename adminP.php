@@ -13,6 +13,24 @@ $query = 'SELECT * FROM propiedad';
 //3- CONSULTAR LA BD
 $resultadoConsulta = mysqli_query($db, $query);
 
+//-----------------------------------------------------------------------------------------------------------------------------------
+
+$registrosPorPagina = 5; // Definir el número de registros a mostrar por página
+$paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1; // Obtener la página actual
+$inicio = ($paginaActual - 1) * $registrosPorPagina; // Calcular el inicio del registro
+
+if ($paginaActual < 1 || !is_numeric($paginaActual)) {
+    // Si el valor de la página actual es menor que 1, redirigir al usuario a la primera página
+    header("Location: ?pagina=1");
+    exit;
+}
+
+// Consulta SQL modificada para agregar la cláusula LIMIT
+$consulta = "SELECT * FROM propiedad LIMIT $inicio, $registrosPorPagina";
+$resultadoConsulta = mysqli_query($db, $consulta);
+
+// Obtener el número total de registros
+$totalRegistros = mysqli_num_rows(mysqli_query($db, "SELECT * FROM propiedad"));
 
 
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -120,8 +138,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </tr>
                     <?php endwhile; ?>
                 </tbody>
-
             </table>
+
+
+            <?php if ($totalRegistros > 5) {
+                // Calcular el número total de páginas
+                $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
+
+                if ($paginaActual > $totalPaginas) {
+                    // Si el usuario ingresa un valor mayor que el número de páginas, redirigir al último registro de la página
+                    header("Location: ?pagina=$totalPaginas");
+                    exit;
+                }
+            ?>
+
+                <!-- Mostrar los enlaces de paginación -->
+                <div class="paginacion">
+
+                    <?php if ($paginaActual > 1) : ?>
+                        <a class="anterior-siguiente" href="?pagina=<?php echo $paginaActual - 1; ?>">Anterior</a>
+                    <?php endif; ?>
+
+                    <?php for ($i = 1; $i <= $totalPaginas; $i++) : ?>
+                        <?php if ($i == $paginaActual) : ?>
+                            <span class="pagina-actual"><?php echo $i; ?></span>
+                        <?php else : ?>
+                            <a href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+
+                    <?php if ($paginaActual < $totalPaginas) : ?>
+                        <a class="anterior-siguiente" href="?pagina=<?php echo $paginaActual + 1; ?>">Siguiente</a>
+                    <?php endif; ?>
+                </div>
+
+            <?php } ?>
 
         </div>
     </main>

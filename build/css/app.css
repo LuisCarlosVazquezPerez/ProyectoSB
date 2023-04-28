@@ -733,3 +733,28 @@ input[type=file] {
 .margin-0 {
   margin: 0;
 }
+
+.paginacion {
+  margin-top: 3rem;
+  text-align: center;
+  font-size: larger;
+}
+.paginacion a {
+  text-decoration: none;
+  color: black;
+  font-size: larger;
+  margin: 0 1rem 0 1rem;
+}
+.paginacion a:hover {
+  color: red;
+  transition: 0.2s ease-in-out;
+}
+.paginacion .pagina-actual {
+  color: red;
+  font-size: 3rem;
+  font-weight: bolder;
+}
+.paginacion .anterior-siguiente {
+  color: blue;
+  margin: 0 1rem 0 1rem;
+}
