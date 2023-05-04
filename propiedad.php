@@ -36,7 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
     $numCasa = mysqli_real_escape_string($db, $_POST['numCasa']);
     $creado = date('Y/m/d'); //INGRESA LA FECHA AUTOMATICAMENTE
     $estadoPropiedad = 1 ; //AGREGA POR DEFAULT EN LA COLUMA ESTADO 'PUBLICADA'
+    $idAgente = 1; // $idAgente = $_SESSION['idAgente']; // suponiendo que el identificador de la sesión que contiene el id del agente es 'id_agente'
     $imagen = $_FILES['imagen']; //ASIGNAR LA IMAGEN A UNA VARIABLE
+    
 
     if (!$titulo) {
         $errores[] = 'Debes agregar un titulo';
@@ -87,8 +89,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
 
 
         //INSERTAR EN LA BASE DE DATOS
-        $query = " INSERT INTO propiedad (titulo, descripcion, precio, imagen , coloniaCasa, calleCasa, numCasa, fechaPub, estadoPropiedad)
-    VALUES ('$titulo', '$descripcion', '$precio','$nombreImagen', '$coloniaCasa', '$calleCasa', '$numCasa', '$creado', '$estadoPropiedad') ";
+        $query = " INSERT INTO propiedad (titulo, descripcion, precio, imagen , coloniaCasa, calleCasa, numCasa, fechaPub, estadoPropiedad, idAgente)
+    VALUES ('$titulo', '$descripcion', '$precio','$nombreImagen', '$coloniaCasa', '$calleCasa', '$numCasa', '$creado', '$estadoPropiedad','$idAgente') ";
+
 
         //echo $query;  //PARA VER QUE EL QUERY ESTE ESCRITO CORRECTAMENTE
 
