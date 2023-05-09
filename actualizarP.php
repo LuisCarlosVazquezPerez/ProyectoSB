@@ -1,18 +1,35 @@
 <?php
+//ACTUALIZAR
+$id = $_GET['id'];
+$id = filter_var($id, FILTER_VALIDATE_INT);
+if (!$id) {
+    header('Location: /adminP.php');
+}
+
+//-------------------------
+
 //BASE DE DATOS CONECTARLA
 require './includes/config/database.php';
 $db = conectarDB();
 
+//OBTENER LA CONSULTA DE LA PROPIEDAD
+$consulta = "SELECT * FROM propiedad WHERE id = ${id}";
+$resultado = mysqli_query($db, $consulta);
+$propiedad = mysqli_fetch_assoc($resultado);
+
+
+
 //ARREGLO CON MENSAJES DE ERRORES
 $errores = [];
 
-//VARIABLES SE CREAN VACIAS
-$titulo = '';
-$descripcion = '';
-$precio = '';
-$coloniaCasa = '';
-$calleCasa = '';
-$numCasa = '';
+//VARIABLES SE CREAN VACIAS-> POSTERIORMENTE EN ACTUALIZAR NOS LA TRAEMOS CON EL FETCH
+$titulo = $propiedad['titulo'];
+$descripcion = $propiedad['descripcion'];
+$precio = $propiedad['precio'];
+$coloniaCasa = $propiedad['coloniaCasa'];
+$calleCasa = $propiedad['calleCasa'];
+$numCasa = $propiedad['numCasa'];
+$imagenPropiedad = $propiedad['imagen'];
 
 //EJECUTA EL CODIGO DEDSPUES DE QUE EL USUARIO ENVIA EL FORMULARIO
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
@@ -35,10 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
     $calleCasa = mysqli_real_escape_string($db, $_POST['calleCasa']);
     $numCasa = mysqli_real_escape_string($db, $_POST['numCasa']);
     $creado = date('Y/m/d'); //INGRESA LA FECHA AUTOMATICAMENTE
-    $estadoPropiedad = 1 ; //AGREGA POR DEFAULT EN LA COLUMA ESTADO 'PUBLICADA'
-    $idAgente = 1; // $idAgente = $_SESSION['idAgente']; // suponiendo que el identificador de la sesión que contiene el id del agente es 'id_agente'
+    $estadoPropiedad = 'Publicada'; //AGREGA POR DEFAULT EN LA COLUMA ESTADO 'PUBLICADA'
     $imagen = $_FILES['imagen']; //ASIGNAR LA IMAGEN A UNA VARIABLE
-    
 
     if (!$titulo) {
         $errores[] = 'Debes agregar un titulo';
@@ -58,10 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
     if (!$numCasa) {
         $errores[] = 'Debes agregar el numero de casa';
     }
-    if (!$imagen['name'] || $imagen['error']) { //Si la imagen no existe o no la agregan || si la imagen se pasa de los 2 mb
-        $errores[] = 'Debes agregar una imagen'; //PHP tiene limitado de 2 mb
-        //Si se pasa de dos megas te retorna un error
-    }
+
     //VALIDAR POR SIZE DE LA IMAGEN (1 mb maximo)
     $medida = 1000 * 1000; //LOS DATOS LOS MIDE EN BYTES, 1000000 bytes = 1mb
     if ($imagen['size'] > $medida) {
@@ -73,32 +85,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
     //REVISAR QUE EL ARRAY DE ERRORES ESTE VACIO
     //ISSET REVISA QUE LA VARIABLE ESTE CREADA /  EMPTY REVISA QUE UN ARREGLO ESTE VACIO
     if (empty($errores)) {
-        //SUBIDA DE ARCHIVOS (IMAGEN)
+        //ACTUALIZAR (IMAGEN)
 
         //CREAR CARPETAS
-        $carpetaImagenes = 'imagenes';
+        $carpetaImagenes = 'imagenes/';
         if (!is_dir($carpetaImagenes)) { //is_dir RETORNA SI UNA CARPETA EXISTE
             mkdir($carpetaImagenes); //mkdir PARA CREAR UN DIRECTORIO
         }
 
-        //GENERAR NOMBRE UNICO PARA LAS IMAGENES
-        $nombreImagen = md5(uniqid(rand(), true)) . '.jpg'; //md5(uniqid(rand())) GENERAN NUMEROS ALEATORIOS PERO NO TIENE NADA QUE VER CON SEGURIDAD (EL ALG FUE HACKEADO)
+        $nombreImagen = '';
 
-        //SUBIR LA IMAGEN 
-        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . "/" . $nombreImagen);  //PARA MOVER LA IMAGEN EN MEMORIA, AL SERVIDOR, HACIA LA CARPETA IMAGENES
+        if ($imagen['name']) {
+            //SI HAY IMAGEN ENTONCES ELIMINAR LA PREVIA PARA NO ACUMULAR EN EL SERVIDOR
+            unlink($carpetaImagenes . $propiedad['imagen']); //propiedad['imagen'] viene del fetch
+            //unlink es para eliminar archivos
+            //-----------------------------------------------------------------------
+            //GENERAR NOMBRE UNICO PARA LAS IMAGENES
+            $nombreImagen = md5(uniqid(rand(), true)) . '.jpg'; //md5(uniqid(rand())) GENERAN NUMEROS ALEATORIOS PERO NO TIENE NADA QUE VER CON SEGURIDAD (EL ALG FUE HACKEADO)
+            //SUBIR LA IMAGEN 
+            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes  . $nombreImagen);  //PARA MOVER LA IMAGEN EN MEMORIA, AL SERVIDOR, HACIA LA CARPETA IMAGENES
+        } else {
+            $nombreImagen = $propiedad['imagen']; //REMEMBER: propiedad viene desde la BD
+        }
 
+        //----ACTUALIZAR
+        $query = "UPDATE propiedad SET 
+        titulo = '${titulo}', 
+        descripcion = '${descripcion}', 
+        precio = '${precio}', 
+        imagen = '${nombreImagen}', 
+        coloniaCasa = '${coloniaCasa}', 
+        calleCasa = '${calleCasa}', 
+        numCasa = '${numCasa}' WHERE id = $id ";
 
-        //INSERTAR EN LA BASE DE DATOS
-        $query = " INSERT INTO propiedad (titulo, descripcion, precio, imagen , coloniaCasa, calleCasa, numCasa, fechaPub, estadoPropiedad, idAgente)
-    VALUES ('$titulo', '$descripcion', '$precio','$nombreImagen', '$coloniaCasa', '$calleCasa', '$numCasa', '$creado', '$estadoPropiedad','$idAgente') ";
-
-
-        //echo $query;  //PARA VER QUE EL QUERY ESTE ESCRITO CORRECTAMENTE
+        // echo $query;  //PARA VER QUE EL QUERY ESTE ESCRITO CORRECTAMENTE.
+        // exit;
 
         $resultado = mysqli_query($db, $query);
         if ($resultado) {
             //REDIRECCIONAR AL USUARIO.
-            header('Location: /adminP.php?resultado=1');
+            header('Location: /adminP.php?resultado=2');
         }
     }
 }
@@ -122,17 +148,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
     <header class="titulo">
         <div class="titulo__texto">
             <h2>BienesRaices SoftBrothers</h2>
-            <p>Crear Propiedad</p>
+            <p>Actualizar Propiedad</p>
         </div>
     </header>
 
 
     <main>
-    
         <div class="contenido">
-            <div class="volver-boton">
-                <a href="/AdminP.php"><button class="boton-adminP">Volver</button></a>
-            </div>
+
             <!-- PARA MOSTRAR LA ALERTA DE LOS ERRORES -->
             <?php foreach ($errores as $error) : ?> <!--FOREACH PARA EJECUTAR AL MENOS 1 VEZ POR CADA VEZ QUE HAY UN ELEMENTO EN EL ARREGLO -->
 
@@ -143,11 +166,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
             <?php endforeach; ?>
 
 
-            <form action="propiedad.php" class="contenido__formulario" enctype="multipart/form-data" method="POST" id="formPropiedad"> <!--enctype para subir imagenes-->
-
+            <form class="contenido__formulario" enctype="multipart/form-data" method="POST" id="formPropiedad"> <!--enctype para subir imagenes-->
+                <!-- SI NO LE PONES ACTION LO ENVIA AL MISMO ARCHIVO -->
                 <div>
                     <label class="label" for="titulo">Titulo</label>
-                    <input maxlength="20" class="tipotexto" type="text" name="titulo" id="titulo" placeholder="Ingrese Titulo Llamativo" value="<?php echo $titulo ?>">
+                    <input class="tipotexto" type="text" name="titulo" id="titulo" placeholder="Ingrese Titulo Llamativo" value="<?php echo $titulo ?>">
                     <!-- EN VALUE SE AGREGA EL PHP PARA QUE NO SE BORRE LO QUE SE AGREGO AL MOMENTO DE FALTAR DATOS -->
                 </div>
 
@@ -158,12 +181,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
 
                 <div>
                     <label class="label" for="precio">Precio</label>
-                    <input min="1" max="99999999" class="tipotexto" type="number" name="precio" id="precio" min="0" placeholder="Ingrese precio de la propiedad" value="<?php echo $precio ?>">
+                    <input class="tipotexto" type="number" name="precio" id="precio" min="0" placeholder="Ingrese precio de la propiedad" value="<?php echo $precio ?>">
                 </div>
 
                 <div>
                     <label class="label" for="imagen">Imagen</label>
                     <input class="tipotexto" type="file" id="imagen" accept="image/jpeg, image/png" name="imagen">
+                </div>
+
+                <div>
+                    <img src="/imagenes/<?php echo $imagenPropiedad; ?>" class="imagen-small">
                 </div>
 
                 <div>
@@ -182,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  //VALIDA QUE SEA POST
                 </div>
 
                 <div class="boton">
-                    <input class="boton__submit" type="submit" value="Enviar">
+                    <input class="boton__submit" type="submit" value="Actualizar">
                 </div>
 
             </form> <!--Acaba la etiqueta form-->
